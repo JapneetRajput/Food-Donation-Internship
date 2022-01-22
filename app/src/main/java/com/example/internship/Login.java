@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,7 +56,12 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 String txt_email = emailET.getText().toString();
                 String txt_password = passwordET.getText().toString();
-                loginUser(txt_email,txt_password);
+                if(txt_email.isEmpty() || txt_password.isEmpty()){
+                    Toast.makeText(Login.this, "All fields are mandatory", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    loginUser(txt_email, txt_password);
+                }
             }
         });
 
@@ -98,12 +105,26 @@ public class Login extends AppCompatActivity {
     }
 
     private void loginUser(String email, String password) {
-        auth.signInWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+//        auth.signInWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+//            @Override
+//            public void onSuccess(AuthResult authResult) {
+//                Toast.makeText(Login.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(Login.this, MainActivity.class));
+//                finish();
+//            }
+//        });
+
+        auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
-            public void onSuccess(AuthResult authResult) {
-                Toast.makeText(Login.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(Login.this, MainActivity.class));
-                finish();
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(Login.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(Login.this, MainActivity.class));
+                    finish();
+                }
+                else{
+                    Toast.makeText(Login.this, "Credentials don't match", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

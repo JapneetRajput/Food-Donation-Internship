@@ -21,18 +21,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        replaceFragment(new HomeFragment());
+        bottomNavigationView.setSelectedItemId(R.id.home);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch(item.getItemId()){
                 case R.id.home:
-                    replaceFragment(new HomeFragment());
+                    startActivity(new Intent(MainActivity.this,MainActivity.class));
+                    finish();
                     break;
                 case R.id.profile:
                     startActivity(new Intent(MainActivity.this,Profile.class));
-//                    replaceFragment(new ProfileFragment());
+                    finish();
                     break;
                 case R.id.settings:
-                    replaceFragment(new SettingsFragment());
+                    startActivity(new Intent(MainActivity.this,Settings.class));
+                    finish();
                     break;
             }
 
@@ -55,10 +57,4 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-    private void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayout,fragment);
-        fragmentTransaction.commit();
-    }
 }
