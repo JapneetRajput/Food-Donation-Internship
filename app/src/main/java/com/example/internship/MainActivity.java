@@ -26,13 +26,15 @@ public class MainActivity extends AppCompatActivity {
             switch(item.getItemId()){
                 case R.id.home:
                     startActivity(new Intent(MainActivity.this,MainActivity.class));
+                    finish();
                     break;
                 case R.id.profile:
                     startActivity(new Intent(MainActivity.this,Profile.class));
-//                    replaceFragment(new ProfileFragment());
+                    finish();
                     break;
                 case R.id.settings:
                     startActivity(new Intent(MainActivity.this,Settings.class));
+                    finish();
                     break;
             }
 

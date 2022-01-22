@@ -37,7 +37,8 @@ public class Profile extends AppCompatActivity {
         numberTV= findViewById(R.id.number);
         emailTV= findViewById(R.id.email);
         logout = findViewById(R.id.button);
-
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.profile);
         user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
         usersReference = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -49,6 +50,8 @@ public class Profile extends AppCompatActivity {
                 String email = "Email : " +snapshot.child(uid).child("email").getValue(String.class);
 
                 nameTV.setText(name);
+                numberTV.setText(number);
+                emailTV.setText(email);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -56,7 +59,24 @@ public class Profile extends AppCompatActivity {
             }
         });
 
-        bottomNavigationView.setSelectedItemId(R.id.profile);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            switch(item.getItemId()){
+                case R.id.home:
+                    startActivity(new Intent(Profile.this,MainActivity.class));
+                    finish();
+                    break;
+                case R.id.profile:
+                    startActivity(new Intent(Profile.this,Profile.class));
+                    finish();
+                    break;
+                case R.id.settings:
+                    startActivity(new Intent(Profile.this,Settings.class));
+                    finish();
+                    break;
+            }
+
+            return true;
+        });
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override

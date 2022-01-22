@@ -115,7 +115,7 @@ public class Register extends AppCompatActivity {
                 if(task.isSuccessful()){
                     Toast.makeText(Register.this, "Registration successful", Toast.LENGTH_SHORT).show();
                     createDatabaseValues(name,number,email);
-                    startActivity(new Intent(Register.this,Login.class));
+                    startActivity(new Intent(Register.this,MainActivity.class));
                     finish();
                 }
                 else{
