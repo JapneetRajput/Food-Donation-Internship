@@ -51,7 +51,6 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 registerUser();
-                Toast.makeText(StartActivity.this, "Working", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -79,5 +78,17 @@ public class StartActivity extends AppCompatActivity {
 
         dataExtract userr = new dataExtract("Guest name","Guest number","Guest email");
         usersReference.child(user.getUid()).setValue(userr);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(FirebaseAuth.getInstance().getCurrentUser()!=null){
+            startActivity(new Intent(StartActivity.this,MainActivity.class));
+            finish();
+        }
+        else{
+            Toast.makeText(StartActivity.this, "Login/Register", Toast.LENGTH_SHORT).show();
+        }
     }
 }
