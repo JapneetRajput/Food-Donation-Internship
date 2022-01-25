@@ -12,10 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Internship">
         <activity
+            android:name=".Small"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateProfile"
+            android:exported="false" />
+        <activity
+            android:name=".Bulk"
+            android:exported="false" />
+        <activity
             android:name=".Settings"
             android:exported="false" />
         <activity
-            android:name=".Profile"
+            android:name=".PastOrders"
             android:exported="false" />
         <activity
             android:name=".Login"
